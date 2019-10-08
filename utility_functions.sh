@@ -1,10 +1,16 @@
-get_inside_pod() {
-	pod_name=$(get_pod $1)
+shell_into_pod() {
+	pod_name=$(pod_name $1)
 	echo $pod_name
 	kubectl exec -it "$pod_name" -- sh
 }
 
-get_pod() {
+pod_logs() {
+	pod_name=$(pod_name $1)	
+	echo $pod_name
+	kubectl logs -f --tail=10 "$pod_name" | jq
+}
+
+pod_name() {
 	if [ -z "$1" ]
 		then
 			echo "Pod name not specified"
