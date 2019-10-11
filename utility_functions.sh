@@ -19,3 +19,11 @@ pod_name() {
 	pod_name=$(kubectl get pods | grep "$1" | awk 'NR==1{print $1}')
 	echo $pod_name
 }
+
+ctx_current() {
+	kubectl config view -o=jsonpath='{.current-context}'
+}
+
+ctx_list() {
+	kubectl config get-contexts -o=name
+}
